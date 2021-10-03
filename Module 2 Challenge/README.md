@@ -8,6 +8,8 @@ By using VBA and applying it to worksheet 'All Stocks Analysis', a straightforwa
 ## Results
 
   
+![2017_Stock Analysis Results](https://user-images.githubusercontent.com/90368828/135771724-2145325b-e917-4722-94fa-f49ac5ee8a9d.png)
+![2018_Stock Analysis Results](https://user-images.githubusercontent.com/90368828/135771728-30278fc4-a607-419c-b050-ca3e5d1c692c.png)
 
 
 After applying the analysis to both 2017 & 2018, 2017 shows more positive and marginal return compared to the output 2018 provides. There are significant returns with tickers such as DQ, ENPH, FSLR, and SEDG; providing 199.4%, 129.5%, 101.3% and 184.5% in returns respectively. The remaining tickers all provide some level of positive returns, with the only exception being TERP which had a negative return of (7.2)%.
@@ -19,10 +21,14 @@ Between the original workbook, *green_stocks*, and the *VBA_Challenge* workbook 
 
 
 **Original Runtime (left) and Refactored Runtime (right) for 2017 analysis**
-   
+![VBA_Challenge_2017_original](https://user-images.githubusercontent.com/90368828/135771734-b9ebc042-ef81-4930-b476-30d6c89c715c.png)
+![VBA_Challenge_2017](https://user-images.githubusercontent.com/90368828/135771736-e4745045-933f-4b38-bc59-dbc8a8ff6f5d.png)
+
 
 **Original Runtime (left) and Refactored Runtime (right) for 2018 analysis**
-  
+![VBA_Challenge_2018_original](https://user-images.githubusercontent.com/90368828/135771743-8022851b-bbd7-47b7-b624-2050d6087057.png)
+![VBA_Challenge_2018](https://user-images.githubusercontent.com/90368828/135771746-962af4c2-f344-4b32-b5a2-0a448ea6faff.png)
+
 Upon review of the original and refactored scripts, there were 2 main contributors to the decreased runtimes. One of the first factors that assisted in shaving off milliseconds would be the inclusion of the conditional formatting lines.
 
 **“'Code for Conditional Formatting.
@@ -38,19 +44,20 @@ dataRowStart = 4
 dataRowEnd = 15
 For I = dataRowStart To dataRowEnd
 
-    If Cells(I, 3) > 0 Then
-        'Color the cell green
-        Cells(I, 3).Interior.Color = vbGreen
+ If Cells(I, 3) > 0 Then
+   'Color the cell green
+   Cells(I, 3).Interior.Color = vbGreen
 
-    ElseIf Cells(I, 3) < 0 Then
+ ElseIf Cells(I, 3) < 0 Then
 
-        'Color the cell red
-        Cells(I, 3).Interior.Color = vbRed
-    Else
-        'Clear the cell color
-        Cells(I, 3).Interior.Color = xlNone
+   'Color the cell red
+   Cells(I, 3).Interior.Color = vbRed
     
-    End If
+ Else
+    'Clear the cell color
+    Cells(I, 3).Interior.Color = xlNone
+    
+ End If
 Next I”**
 
 In the original workbook, I had this portion of script apportioned to a completely different macro that would run after the *AllStocksAnalysis* script. But when refactored, I included it within the same macro near the ending lines of script. I believe that the total amount of macros in the workbook were reduced by including this portion in the main macro, therefore reducing the total runtime.
